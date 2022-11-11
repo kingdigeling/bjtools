@@ -169,7 +169,7 @@ cus_reg_diag <-
         empirical = TRUE
       )
 
-    formula <- lm$call %>% as.character() %>% str_split(pattern = "=")
+    formula <- lm$call %>% as.character() %>% stringr::str_split(pattern = "=")
 
     model_data_sim_new <- model_data_sim
 
