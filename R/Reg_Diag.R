@@ -50,14 +50,14 @@ cus_reg_diag <-
 
     if (!interactionYN) {
       if (ncol(lm$model) > 2) {
-        var_inf <- (vif(lm))
+        var_inf <- (car::vif(lm))
         value[6] <- max(var_inf)
       }
     }
 
     if (interactionYN) {
       if (ncol(lm$model) > 2) {
-        var_inf <- (vif(lm, type = "predictor"))
+        var_inf <- (car::vif(lm, type = "predictor"))
         value[6] <- max(var_inf$`GVIF^(1/(2*Df))`) ^ 2
         warning("Using VIF type = predictor, output is GVIF^(1/(2*Df))^2")
       }
