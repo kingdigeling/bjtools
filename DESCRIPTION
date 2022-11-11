@@ -1,0 +1,16 @@
+Package: bjtools
+Type: Package
+Title: Basic Regression Diagnostics
+Version: 0.1.0
+Author: Björn Thorben Gilles
+Maintainer: Björn Gilles <btg98@gmx.de>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    car,
+    lmtest,
+    magrittr
+RoxygenNote: 7.2.1
