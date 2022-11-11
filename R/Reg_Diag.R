@@ -2,7 +2,8 @@
 
 'usethis::use_package("lmtest")
 usethis::use_package("car")
-usethis::use_pipe(export = TRUE)'
+usethis::use_pipe(export = TRUE)
+usethis::use_package("stringr")'
 
 'library(car)
 library(car)

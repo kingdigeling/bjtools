@@ -12,5 +12,6 @@ LazyData: true
 Imports: 
     car,
     lmtest,
-    magrittr
+    magrittr,
+    stringr
 RoxygenNote: 7.2.1
