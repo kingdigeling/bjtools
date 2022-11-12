@@ -19,17 +19,22 @@ lm1 <- lm(data=iris,Sepal.Length~Petal.Length+Petal.Width+Species)'
 #' @export
 #'
 #' @param lm Please enter lm object with the following notation: lm(data = data, Y~Xi+Xn)
+#' @param summaryOnly Only shows the statistical test results, omitting plots.
 #' @param interactionYN TRUE or FALSE, are interactions included? Will calculate GVIF instead of VIF.
 #' @param sig_level A value between 0 and 1. If a test's p-value is lager than sig_level, the assumption is met.
 #' @param cutoff_vif Cutoof-VIF threshold for identifying multicoliniearity.
+#' @param seed Set seed for reproducible number generation.
+
+
 
 cus_reg_diag <-
   function(lm,
-           summaryOnly = TRUE,
+           summaryOnly = FALSE,
            interactionYN = FALSE,
            sig_level = .05,
            cutoff_vif = 5,
-           seed = 123) {
+           seed = 123,
+           rMarkdown = FALSE) {
     #Funktion für die Regressionsdiagnostik.
 
     #Vorbereitung des Data.Frames, welches der Output der Funktion ist.
@@ -310,24 +315,24 @@ cus_reg_diag <-
     car::residualPlot(lm2)
     mtext("Residuals vs fitted,\n simuliertes Modell")
 
-    linearity_plot_result <-
-      readline("Assume Linearity based on left plot? (y/n):")
+    if(!rMarkdown){linearity_plot_result <-
+      readline("Assume Linearity based on left plot? (y/n):")}
 
     car::qqPlot(lm)
     mtext("QQ-Plot,\n echtes Modell")
     car:::qqPlot(lm2$residuals)
     mtext("QQ-Plot,\n simuliertes Modell")
 
-    normality_plot_result <-
-      readline("Assume Normality based on left plot? (y/n):")
+    if(!rMarkdown){normality_plot_result <-
+      readline("Assume Normality based on left plot? (y/n):")}
 
     plot(lm, 4, caption = "")
     mtext("Cook's d Plot,\n echtes Modell")
     plot(lm2, 4, caption = "")
     mtext("Cook's d Plot,\n simuliertes Modell")
 
-    outliers_plot_result <-
-      readline("Identify Outliers based on left plot. (0 = non):")
+    if(!rMarkdown){outliers_plot_result <-
+      readline("Identify Outliers based on left plot. (0 = non):")}
 
 
 
