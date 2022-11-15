@@ -134,11 +134,15 @@ lm_diagnostic <-
       conclusion[5] <- "Okay"
     }
 
-    if (value[6] %>% as.numeric() > cutoff_vif & value[6] != "NA") {
-      conclusion[6] <- "Violated"
-    } else{
-      conclusion[6] <- "Okay"
+    if(value[6]!="NA"){
+      if (value[6] %>% as.numeric() > cutoff_vif & value[6] != "NA") {
+        conclusion[6] <- "Violated"
+      } else{
+        conclusion[6] <- "Okay"
+      }
     }
+
+
     value[1] <- paste("n= ", n, "k= ", length(coef(lm)) - 1)
 
     result <- data.frame(tests, conclusion, value, threshold)
@@ -270,6 +274,8 @@ lm_diagnostic <-
             #eine Matrix aus n beobachtungen und i = verbundene Dummyvariablen mindestens
             #eine Reihensumme >= 2 beträgt. D. h., dass eine Fall wie z.B. 1 1, 1 0 1 oder 1 1 1
             #vorliegt.
+            if(!model_data_sim_new[,dummy_var_connected]%>%class()=="numeric"){
+
             if((rowSums(model_data_sim_new[,dummy_var_connected])>=2)%>%any()){
 
               #Wenn das der Fall ist, dann werden alle Reihen durchlaufen, welche diese
@@ -290,7 +296,8 @@ lm_diagnostic <-
               }
 
             }
-          }
+            }
+            }
 
 
         }
