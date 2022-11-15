@@ -27,7 +27,7 @@ lm1 <- lm(data=iris,Sepal.Length~Petal.Length+Petal.Width+Species)'
 
 
 
-cus_reg_diag <-
+lm_diagnostic <-
   function(lm,
            summaryOnly = FALSE,
            interactionYN = FALSE,
@@ -55,6 +55,9 @@ cus_reg_diag <-
     n <- nrow(lm$model)
     preds <- ncol(lm$model)
 
+    #Wenn keine Interaktionen vorliegen und mehr als ein Präditkor im Modell
+    #enthalten ist, wird der VIF berechnet und der höchste VIF zwischen-
+    #gespeichert.
     if (!interactionYN) {
       if (ncol(lm$model) > 2) {
         var_inf <- (car::vif(lm))
@@ -62,6 +65,7 @@ cus_reg_diag <-
       }
     }
 
+    #Falls Interaktionen enthalten sind wird stattdessen der GVIF berechnet.
     if (interactionYN) {
       if (ncol(lm$model) > 2) {
         var_inf <- (car::vif(lm, type = "predictor"))
@@ -73,7 +77,7 @@ cus_reg_diag <-
 
     cdist <- lm %>% cooks.distance()
 
-
+    #Cook's d cutoff 50 Percentil der F-Verteilung wird berechnet.
     cdist_cutoff <-
       qf(.5, length(coef(lm)) + 1, nobs(lm) - length(coef(lm)) - 1)
 
